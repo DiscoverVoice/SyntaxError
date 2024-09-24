@@ -6,6 +6,12 @@ channels:
   - defaults
 dependencies:
   - python=3.8
+  - datasets
+  - pandas
+  - pyarrow
+  - pytorch
+  - ipykernel
+  - ipywidgets
   - pip
   - pip:
       - black
