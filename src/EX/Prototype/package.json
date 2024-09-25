@@ -1,7 +1,7 @@
 {
-  "name": "Announcer",
-  "displayName": "",
-  "description": "Prototype of QA Extention",
+  "name": "Prototype",
+  "displayName": "Announcer",
+  "description": "Prototype",
   "version": "0.0.1",
   "engines": {
     "vscode": "^1.93.0"
@@ -13,7 +13,7 @@
   "main": "./extension.js",
   "contributes": {
     "commands": [{
-      "command": "Announcer.helloWorld",
+      "command": "Prototype.helloWorld",
       "title": "Hello World"
     }]
   },
