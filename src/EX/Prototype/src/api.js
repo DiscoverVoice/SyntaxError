@@ -1,4 +1,4 @@
-require('dotenv').config();  // .env 파일에서 로드
+require('dotenv').config();  
 const axios = require('axios');
 
 // OpenAI API 키 설정
