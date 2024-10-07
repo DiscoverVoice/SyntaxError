@@ -47,3 +47,9 @@ npm install
 sudo apt update
 sudo apt install afl
 ```
+
+## 2.4 Install openai(0.28)
+
+```bash
+poetry add openai@0.28
+```
