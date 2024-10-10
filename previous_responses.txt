@@ -1,0 +1,25 @@
+```cpp
+#include <iostream>
+
+int calculateDifference(int a, int b) {
+    return a - b;
+}
+
+int main() {
+    // Example test cases
+
+    // Test case 1
+    int a1 = 10, b1 = 3;
+    std::cout << "Difference (10, 3): " << calculateDifference(a1, b1) << std::endl;
+
+    // Test case 2
+    int a2 = -5, b2 = -10;
+    std::cout << "Difference (-5, -10): " << calculateDifference(a2, b2) << std::endl;
+
+    // Test case 3
+    int a3 = 0, b3 = 0;
+    std::cout << "Difference (0, 0): " << calculateDifference(a3, b3) << std::endl;
+    
+    return 0;
+}
+```
