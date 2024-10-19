@@ -37,12 +37,12 @@ def natural_language_to_standardized_spec(natural_language_spec):
     Analyze the following natural language specification and convert it into a standardized specification:
     {natural_language_spec}
     
-    1. ë³€ìˆ˜ ë° ì œì•½ ì¡°ê±´ì„ í¬í•¨í•œ ì…ë ¥ í˜•ì‹
-    2. ì¶œë ¥ í˜•ì‹ê³¼ ì œì•½ ì¡°ê±´
-    3. ê·œì¹™ ìš”ì•½
+    1. ë³??ˆ˜ ë°? ? œ?•½ ì¡°ê±´?„ ?¬?•¨?•œ ?…? ¥ ?˜•?‹
+    2. ì¶œë ¥ ?˜•?‹ê³? ? œ?•½ ì¡°ê±´
+    3. ê·œì¹™ ?š”?•½
     4. ì¡°ê±´
-    5. ì‹œê°„ ë° ë©”ëª¨ë¦¬ ì œí•œ
-    ë§ˆì§€ë§‰ìœ¼ë¡œ ì´ˆê¸° ì‹œë“œë¥¼ ì œê³µí•˜ê¸° ìœ„í•œ ì…ë ¥ ì˜ˆì‹œë„ ì œê³µí•´ë¼.
+    5. ?‹œê°? ë°? ë©”ëª¨ë¦? ? œ?•œ
+    ë§ˆì??ë§‰ìœ¼ë¡? ì´ˆê¸° ?‹œ?“œë¥? ? œê³µí•˜ê¸? ?œ„?•œ ?…? ¥ ?˜ˆ?‹œ?„ ? œê³µí•´?¼.
     """
     try:
         response = client.chat.completions.create(model="gpt-4o",
