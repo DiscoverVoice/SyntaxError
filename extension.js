@@ -13,7 +13,7 @@ const logger = winston.createLogger({
   ),
   transports: [
     new winston.transports.File({
-      filename: path.join(__dirname, "extension.log"),
+      filename: path.join(__dirname, "logs", "extension.log"),
     }), // 로그 파일 경로 명시
     new winston.transports.Console(),
   ],
@@ -51,13 +51,16 @@ function activate(context) {
           natural_language_spec: naturalLanguageSpec,
         };
 
-        const jsonFilePath = path.join(__dirname, "input.json");
+        // timestamp 생성
+        const timestamp = new Date().toISOString().replace(/[-:T.]/g, '').slice(0, 15); // 예: 20241018T08121
+        const jsonFilePath = path.join(__dirname, "Data", "Input", `input_${timestamp}.json`);
         fs.writeFileSync(jsonFilePath, JSON.stringify(inputData, null, 2));
 
         logger.info("JSON file created: " + jsonFilePath);
 
         const pythonScriptPath = path.join(__dirname, "code.py");
 
+        // Python 스크립트 실행
         exec(`python3 ${pythonScriptPath}`, (error, stdout, stderr) => {
           if (error) {
             vscode.window.showErrorMessage(`Error: ${stderr}`);
@@ -68,9 +71,16 @@ function activate(context) {
           // 정형 명세와 생성된 코드 JSON 파일 경로
           const standardizedSpecFile = path.join(
             __dirname,
-            "standard_spec.json",
+            "Data",
+            "Standard_spec",
+            `standard_spec_${timestamp}.json`,
           );
-          const generatedCodeFile = path.join(__dirname, "generated_code.json");
+          const generatedCodeFile = path.join(
+            __dirname,
+            "Data",
+            "Generated",
+            `generated_code_${timestamp}.json`,
+          );
 
           // JSON 파일을 읽어옴
           const standardizedSpec = readJsonFile(standardizedSpecFile);
