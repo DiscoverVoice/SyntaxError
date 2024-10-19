@@ -58,7 +58,7 @@ function activate(context) {
 
         logger.info("JSON file created: " + jsonFilePath);
 
-        const pythonScriptPath = path.join(__dirname, "code.py");
+        const pythonScriptPath = path.join(__dirname, "Code.py");
 
         // Python 스크립트 실행
         exec(`python3 ${pythonScriptPath}`, (error, stdout, stderr) => {
