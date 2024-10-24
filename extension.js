@@ -132,14 +132,14 @@ let loadWorksCommand = vscode.commands.registerCommand("extension.LoadWorks", as
     return;
   }
 
-  // 파일 목록을 QuickPick으로 표시
+  // 파일 목록 QuickPick 표시
   const fileOptions = files.map(file => ({
     label: file,
     description: "이전 작업"
   }));
 
   const selectedFile = await vscode.window.showQuickPick(fileOptions, {
-    placeHolder: "이전 작업을 선택하세요"
+    placeHolder: "이전 작업을 선택하세요" 
   });
 
   if (selectedFile) {
@@ -203,11 +203,10 @@ let showMenuCommand = vscode.commands.registerCommand("extension.showMenu", asyn
         vscode.commands.executeCommand("extension.LoadWorks");
         break;
       case "QA Test":
-        vscode.commands.executeCommand("extension.runQATest");
-        //await runQATest();
+        await runQATest();
         break;
       case "Fuzzing":
-        vscode.commands.executeCommand("extension.runFuzzTest");
+        await runFuzzing();
         break;
       case "Exit":
         vscode.window.showInformationMessage("메뉴 종료");
