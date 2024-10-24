@@ -18,8 +18,20 @@
         "title": "Ask ChatGPT"
       },
       {
+        "command": "extension.LoadWorks",
+        "title": "Load works"
+      },
+      {
         "command": "extension.showMenu",
         "title": "Show Menu"
+      },
+      {
+        "command": "extension.runQATest",
+        "title": "QA Test"
+      },
+      {
+        "command": "extension.runFuzzTest",
+        "title": "Fuzzing"
       }
     ]
   },

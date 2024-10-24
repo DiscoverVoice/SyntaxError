@@ -1,0 +1,3 @@
+{
+  "generated_code": "```cpp\n#include <iostream>\n#include <cstdint>\n\nint main() {\n    int n;\n    std::cin >> n;\n    int64_t result = static_cast<int64_t>(n) * n * n * n * n;\n    std::cout << result << std::endl;\n    return 0;\n}\n```"
+}

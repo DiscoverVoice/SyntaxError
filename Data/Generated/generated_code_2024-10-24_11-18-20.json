@@ -1,0 +1,3 @@
+{
+  "generated_code": "```cpp\n#include <iostream>\n#include <string>\n\nint countPermutations(const std::string& s) {\n    int n = s.length();\n    if (n < 3) return 0;\n    return (n * (n - 1) * (n - 2)) / 6 * 6; // (n choose 3) * 3!\n}\n\nint main() {\n    std::string s = \"abcde\";\n    std::cout << countPermutations(s) << std::endl;\n    return 0;\n}\n```"
+}
