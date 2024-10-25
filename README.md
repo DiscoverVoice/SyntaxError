@@ -43,6 +43,8 @@ npm install
 ## 2.3 Install afl
 
 ```bash
-sudo apt update
-sudo apt install afl
+cd src/utils/AFLplusplus
+make distrib
+sudo make install
+git submodule update --init
 ```

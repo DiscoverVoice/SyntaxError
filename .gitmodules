@@ -1,3 +1,6 @@
 [submodule "src/AFLplusplus"]
 	path = src/AFLplusplus
 	url = git@github.com:AFLplusplus/AFLplusplus.git
+[submodule "src/utils/AFLplusplus"]
+	path = src/utils/AFLplusplus
+	url = https://github.com/AFLplusplus/AFLplusplus.git
