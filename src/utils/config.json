@@ -1,0 +1,158 @@
+{
+  "models": {
+    "gpt4": {},
+    "claude3opus": {},
+    "Nxcode": {
+      "repo_id": "NTQAI/Nxcode-CQ-7B-orpo"
+    },
+    "codeT5": {},
+    "codeT5p": {
+      "repo_id": [
+        "Salesforce/codet5p-6b",
+        "Salesforce/codet5p-16b",
+        "Salesforce/instructcodet5p-16b"
+      ]
+    },
+    "WizardCoder": {
+      "repo_id": "WizardLMTeam/WizardCoder-15B-V1.0"
+    },
+    "deepseek": {
+      "repo_id": "deepseek-ai/DeepSeek-V2-Lite"
+    },
+    "Artigenz-Coder": {
+      "repo_id": "Artigenz/Artigenz-Coder-DS-6.7B"
+    },
+    "Magiccoder": {
+      "repo_id": "ise-uiuc/Magicoder-S-DS-6.7B"
+    },
+    "OpenCodeInterpreter": {
+      "repo_id": "m-a-p/OpenCodeInterpreter-DS-6.7B"
+    },
+    "Qwen": {
+      "repo_id": [
+        "Qwen/Qwen2.5-Coder-1.5B",
+        "Qwen/Qwen2.5-Coder-1.5B-Instruct",
+        "Qwen/Qwen2.5-Coder-1.5B-Instruct-GGUF",
+        "Qwen/Qwen2.5-Coder-1.5B-Instruct-AWQ",
+        "Qwen/Qwen2.5-Coder-1.5B-Instruct-GPTQ-Int4",
+        "Qwen/Qwen2.5-Coder-1.5B-Instruct-GPTQ-Int8",
+        "Qwen/Qwen2.5-Coder-7B",
+        "Qwen/Qwen2.5-Coder-7B-Instruct",
+        "Qwen/Qwen2.5-Coder-7B-Instruct-GGUF",
+        "Qwen/Qwen2.5-Coder-7B-Instruct-GPTQ-Int4",
+        "Qwen/Qwen2.5-Coder-7B-Instruct-GPTQ-Int8",
+        "Qwen/Qwen2.5-Coder-7B-Instruct-AWQ"
+      ],
+      "architectures": "Qwen2ForCausalLM",
+      "tokenizer": "Qwen2Tokenizer"
+    },
+    "GraphCodeBERT": {
+      "repo_id": "microsoft/graphcodebert-base"
+    },
+    "starcoder": {
+      "architectures": "Starcoder2ForCausalLM",
+      "tokenizer": "GPT2Tokenizer"
+    },
+    "xlam": {
+      "repo_id": "Salesforce/xLAM-7b-fc-r"
+    },
+    "codellama": {
+      "repo_id": "meta-llama/CodeLlama-7b-hf"
+    },
+    "codestral": {
+      "repo_id": "mistralai/Mamba-Codestral-7B-v0.1"
+    }
+  },
+  "datasets": {
+    "code_search_net": {
+      "path": "code-search-net/code_search_net",
+      "language": [
+        "Go",
+        "Java",
+        "JavaScript",
+        "PHP",
+        "Python",
+        "Ruby"
+      ],
+      "features": [
+        "id",
+        "repository_name",
+        "func_path_in_repository",
+        "func_name",
+        "whole_func_string",
+        "language",
+        "func_code_string",
+        "func_code_tokens",
+        "func_documentation_string",
+        "func_documentation_string_tokens",
+        "split_name",
+        "func_code_url"
+      ]
+    },
+    "the-stack": {
+      "path": "bigcode/the-stack-v2",
+      "language": []
+    },
+    "evalperf": {
+      "path": "evalplus/evalperf"
+    },
+    "humanevalplus": {
+      "path": "evalplus/humanevalplus"
+    },
+    "mbppplus": {
+      "path": "evalplus/mbppplus"
+    },
+    "SecEval": {
+      "path": "s2e-lab/SecurityEval"
+    },
+    "LLMSecEval": {
+      "url": "https://github.com/tuhh-softsec/LLMSecEval"
+    },
+    "CyberSecEval": {
+      "url": "https://meta-llama.github.io/PurpleLlama/"
+    },
+    "Code-Feedback": {
+      "path": "m-a-p/Code-Feedback"
+    },
+    "DebugBench": {
+      "path": "Rtian/DebugBench"
+    },
+    "python_code_instructions": {
+      "path": "iamtarun/python_code_instructions_18k_alpaca",
+      "language": "python",
+      "features": [
+        "python_code_instructions",
+        "input",
+        "output",
+        "prompt"
+      ]
+    },
+    "Code-Feedback-Filtered": {
+      "path": "m-a-p/CodeFeedback-Filtered-Instruction"
+    },
+    "python-codes": {
+      "path": "flytech/python-codes-25k"
+    },
+    "stackoverflow-posts": {
+      "path": "mikex86/stackoverflow-posts"
+    },
+    "code_instructions_alpaca": {
+      "path": "iamtarun/code_instructions_120k_alpaca"
+    },
+    "llama-python-codes": {
+      "path": "flytech/llama-python-codes-30k"
+    },
+    "MMOS": {
+      "path": "cyzhh/MMOS"
+    },
+    "BuggedPythonLeedCode": {
+      "path": "NeuroDragon/BuggedPythonLeetCode"
+    },
+    "code-alpaca": {
+      "path": "NeuroDragon/BuggedPythonLeetCode"
+    },
+    "AIEC": {
+      "path": "AgoraX/AIEC-140K"
+    }
+  }
+}

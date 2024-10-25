@@ -7,7 +7,7 @@ Project Description
 To get started, clone this repository using the following command:
 
 ```bash
-https://github.com/DiscoverVoice/SyntaxError.git
+git clone https://github.com/DiscoverVoice/SyntaxError.git
 cd SyntaxError
 ```
 
@@ -30,7 +30,6 @@ poetry --version
 Next, install the Python dependencies and active the virtual environment:
 
 ```bash
-cd SyntaxError
 poetry install
 poetry shell
 ```
