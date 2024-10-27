@@ -1,4 +1,4 @@
-from transformers import AutoModelForCausalLM, AutoTokenizer
+from langchain_community.llms import vllm
 from datasets import load_dataset
 from abc import ABC, abstractmethod
 from typing import Dict, Any
@@ -28,8 +28,13 @@ class ModelConfig(Config):
 
     def load(self):
         self.model_config = self.config.get(self.name)
-        self.model = AutoModelForCausalLM.from_pretrained(self.model_config["repo_id"])
-        self.tokenzier = AutoTokenizer.from_pretrained(self.model_config["repo_id"])
+        llm = vllm.VLLM(model=self.name,
+                        trust_remote_code=True,
+                        max_new_tokens=1024,
+                        top_k=10,
+                        top_p=0.95,
+                        temperature=0.1
+                        )
 
 
 class DataConfig(Config):
@@ -37,10 +42,6 @@ class DataConfig(Config):
         super().__init__(name, "datasets")
 
 
-def load(self):
-    self.data_config = self.config.get(self.name)
+    def load(self):
+        self.data_config = self.config.get(self.name)
 
-
-def load_model():
-    AutoModelForCausalLM.from_pretrained("", trust_remote_code=True)
-    pass
