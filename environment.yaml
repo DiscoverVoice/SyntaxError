@@ -1,0 +1,30 @@
+name: syntaxerror
+channels:
+  - conda-forge
+  - pytorch
+  - defaults
+dependencies:
+  - python=3.10
+  - black
+  - pytorch
+  - torchvision
+  - torchaudio
+  - ipykernel
+  - ipywidgets
+  - tqdm
+  - datasets
+  - atheris
+  - matplotlib
+  - seaborn
+  - termcolor
+  - scikit-learn
+  - pandas
+  - numpy
+  - psutil
+  - pre-commit
+  - transformers
+  - wheel
+  - pip
+  - pip:
+      - wllvm
+

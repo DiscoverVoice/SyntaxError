@@ -1,79 +1,195 @@
 {
   "models": {
-    "gpt4": {},
-    "claude3opus": {},
-    "Nxcode": {
-      "repo_id": "NTQAI/Nxcode-CQ-7B-orpo"
+    "<5B": {
+      "01-ai": {
+        "repo_id": [
+          "01-ai/Yi-Coder-1.5B-Chat"
+        ],
+        "architecture": "LlamaForCausalLM",
+        "tokenizer": "LlamaTokenizer"
+      },
+      "deepseek-ai": {
+        "repo_id": [
+          "deepseek-ai/deepseek-coder-1.3b-instruct"
+        ],
+        "architecture": "LlamaForCausalLM",
+        "tokenizer": "LlamaTokenizerFast"
+      },
+      "Qwen": {
+        "repo_id": [
+          "Qwen/Qwen2.5-Coder-1.5B-Instruct",
+          "Qwen/Qwen2.5-Coder-1.5B"
+        ],
+        "architecture": "Qwen2ForCausalLM",
+        "tokenizer": "Qwen2Tokenizer"
+      },
+      "rombodawg": {
+        "repo_id": [
+          "rombodawg/rombos_Replete-Coder-Qwen2-1.5b"
+        ],
+        "architecture": "Qwen2ForCausalLM",
+        "tokenizer": "Qwen2Tokenizer"
+      },
+      "microsoft": {
+        "repo_id": [
+          "microsoft/Phi-3-mini-4k-instruct",
+          "microsoft/Phi-3.5-mini-instruct"
+        ],
+        "architecture": "Phi3ForCausalLM",
+        "tokenizer": "LlamaTokenizer"
+      },
+      "meta-llama": {
+        "repo_id": [
+          "meta-llama/Llama-3.2-1B",
+          "meta-llama/Llama-3.2-1B-Instruct"
+        ],
+        "architecture": "LlamaForCausalLM",
+        "tokenizer": "PreTrainedTokenizerFast"
+      }
     },
-    "codeT5": {},
-    "codeT5p": {
-      "repo_id": [
-        "Salesforce/codet5p-6b",
-        "Salesforce/codet5p-16b",
-        "Salesforce/instructcodet5p-16b"
-      ]
+    "<8B": {
+      "Artigenz": {
+        "repo_id": [
+          "Artigenz/Artigenz-Coder-DS-6.7B"
+        ],
+        "architecture": "LlamaForCausalLM",
+        "tokenizer": "LlamaTokenizer"
+      },
+      "codellama": {
+        "repo_id": [
+          "codellama/CodeLlama-7b-hf"
+        ],
+        "architecture": "LlamaForCausalLM",
+        "tokenizer": "CodeLlamaTokenizer"
+      },
+      "deepseek-ai": {
+        "repo_id": [
+          "deepseek-ai/deepseek-coder-6.7b-instruct",
+          "deepseek-ai/deepseek-coder-7b-instruct-v1.5"
+        ],
+        "architecture": "LlamaForCausalLM",
+        "tokenizer": "LlamaTokenizerFast"
+      },
+      "Qwen": {
+        "repo_id": [
+          "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "Qwen/Qwen2.5-Coder-7B",
+          "Qwen/Qwen2.5-Coder-7B-Instruct-AWQ"
+        ],
+        "architecture": "Qwen2ForCausalLM",
+        "tokenizer": "Qwen2Tokenizer"
+      },
+      "TechxGenus": {
+        "repo_id": [
+          "TechxGenus/CursorCore-QW2.5-7B"
+        ],
+        "architecture": "Qwen2ForCausalLM",
+        "tokenizer": "Qwen2Tokenizer"
+      },
+      "mistralai": {
+        "repo_id": [
+          "mistralai/Mistral-7B-Instruct-v0.2"
+        ],
+        "architecture": "MistralForCausalLM",
+        "tokenizer": "LlamaTokenizer"
+      },
+      "WhiteRabbitNeo": {
+        "repo_id": [
+          "WhiteRabbitNeo/WhiteRabbitNeo-2.5-Qwen-2.5-Coder-7B"
+        ],
+        "architecture": "Qwen2ForCausalLM",
+        "tokenizer": "Qwen2Tokenizer"
+      }
     },
-    "WizardCoder": {
-      "repo_id": "WizardLMTeam/WizardCoder-15B-V1.0"
-    },
-    "deepseek": {
-      "repo_id": "deepseek-ai/DeepSeek-V2-Lite"
-    },
-    "Artigenz-Coder": {
-      "repo_id": "Artigenz/Artigenz-Coder-DS-6.7B"
-    },
-    "Magiccoder": {
-      "repo_id": "ise-uiuc/Magicoder-S-DS-6.7B"
-    },
-    "OpenCodeInterpreter": {
-      "repo_id": "m-a-p/OpenCodeInterpreter-DS-6.7B"
-    },
-    "Qwen": {
-      "repo_id": [
-        "Qwen/Qwen2.5-Coder-1.5B",
-        "Qwen/Qwen2.5-Coder-1.5B-Instruct",
-        "Qwen/Qwen2.5-Coder-1.5B-Instruct-GGUF",
-        "Qwen/Qwen2.5-Coder-1.5B-Instruct-AWQ",
-        "Qwen/Qwen2.5-Coder-1.5B-Instruct-GPTQ-Int4",
-        "Qwen/Qwen2.5-Coder-1.5B-Instruct-GPTQ-Int8",
-        "Qwen/Qwen2.5-Coder-7B",
-        "Qwen/Qwen2.5-Coder-7B-Instruct",
-        "Qwen/Qwen2.5-Coder-7B-Instruct-GGUF",
-        "Qwen/Qwen2.5-Coder-7B-Instruct-GPTQ-Int4",
-        "Qwen/Qwen2.5-Coder-7B-Instruct-GPTQ-Int8",
-        "Qwen/Qwen2.5-Coder-7B-Instruct-AWQ"
-      ],
-      "architectures": "Qwen2ForCausalLM",
-      "tokenizer": "Qwen2Tokenizer"
-    },
-    "GraphCodeBERT": {
-      "repo_id": "microsoft/graphcodebert-base"
-    },
-    "starcoder": {
-      "architectures": "Starcoder2ForCausalLM",
-      "tokenizer": "GPT2Tokenizer"
-    },
-    "xlam": {
-      "repo_id": "Salesforce/xLAM-7b-fc-r"
-    },
-    "codellama": {
-      "repo_id": "meta-llama/CodeLlama-7b-hf"
-    },
-    "codestral": {
-      "repo_id": "mistralai/Mamba-Codestral-7B-v0.1"
+    ">8B": {
+      "01-ai": {
+        "repo_id": [
+          "01-ai/Yi-Coder-9B-Chat",
+          "01-ai/Yi-Coder-9B"
+        ],
+        "architecture": "LlamaForCausalLM",
+        "tokenizer": "LlamaTokenizer"
+      },
+      "second-state": {
+        "repo_id": [
+          "second-state/DeepSeek-Coder-V2-Lite-Instruct-GGUF"
+        ],
+        "architecture": "DeepseekV2ForCausalLM",
+        "tokenizer": "LlamaTokenizerFast"
+      },
+      "deepseek-ai": {
+        "repo_id": [
+          "deepseek-ai/DeepSeek-Coder-V2-Lite-Base"
+        ],
+        "architecture": "DeepseekV2ForCausalLM",
+        "tokenizer": "LlamaTokenizerFast"
+      },
+      "Nexusflow": {
+        "repo_id": [
+          "Nexusflow/NexusRaven-V2-13B"
+        ],
+        "architecture": "LlamaForCausalLM",
+        "tokenizer": "CodeLlamaTokenizer"
+      },
+      "rombodawg": {
+        "repo_id": [
+          "rombodawg/rombos_Replete-Coder-Instruct-8b-Merged",
+          "rombodawg/rombos_Replete-Coder-Llama3-8B"
+        ],
+        "architecture": "LlamaForCausalLM",
+        "tokenizer": "PreTrainedTokenizerFast"
+      },
+      "WhiteRabbitNeo": {
+        "repo_id": [
+          "WhiteRabbitNeo/WhiteRabbitNeo-13B-v1"
+        ],
+        "architecture": "LlamaForCausalLM",
+        "tokenizer": "CodeLlamaTokenizer"
+      },
+      "meta-llama": {
+        "repo_id": [
+          "meta-llama/Llama-3.1-8B-Instruct",
+          "meta-llama/Meta-Llama-3-8B-Instruct",
+          "meta-llama/Meta-Llama-3-8B",
+          "meta-llama/Llama-3.1-8B"
+        ],
+        "architecture": "LlamaForCausalLM",
+        "tokenizer": "PreTrainedTokenizerFast"
+      },
+      "mistralai": {
+        "repo_id": [
+          "mistralai/Mistral-Nemo-Instruct-2407"
+        ],
+        "architecture": "AutoModelForCausalLM",
+        "tokenizer": "PreTrainedTokenizerFast"
+      },
+      "microsoft": {
+        "repo_id": [
+          "microsoft/Phi-3-medium-4k-instruct"
+        ],
+        "architecture": "Phi3ForCausalLM",
+        "tokenizer": "LlamaTokenizer"
+      },
+      "CohereForAI": {
+        "repo_id": [
+          "CohereForAI/aya-expanse-8b"
+        ],
+        "architecture": "CohereForCausalLM",
+        "tokenizer": "CohereTokenizer"
+      },
+      "princeton-nlp": {
+        "repo_id": [
+          "princeton-nlp/gemma-2-9b-it-SimPO"
+        ],
+        "architecture": "Gemma2ForCausalLM",
+        "tokenizer": "GemmaTokenizer"
+      }
     }
   },
   "datasets": {
     "code_search_net": {
       "path": "code-search-net/code_search_net",
-      "language": [
-        "Go",
-        "Java",
-        "JavaScript",
-        "PHP",
-        "Python",
-        "Ruby"
-      ],
+      "language": "Multi",
       "features": [
         "id",
         "repository_name",
@@ -89,37 +205,56 @@
         "func_code_url"
       ]
     },
-    "the-stack": {
+    "the-stack-v2": {
       "path": "bigcode/the-stack-v2",
-      "language": []
+      "language": "Multi"
+    },
+    "SecurityEval": {
+      "path": "s2e-lab/SecurityEval",
+      "language": "Python"
     },
     "evalperf": {
-      "path": "evalplus/evalperf"
-    },
-    "humanevalplus": {
-      "path": "evalplus/humanevalplus"
+      "path": "evalplus/evalperf",
+      "language": "Python"
     },
     "mbppplus": {
-      "path": "evalplus/mbppplus"
+      "path": "evalplus/mbppplus",
+      "language": "Python"
     },
-    "SecEval": {
-      "path": "s2e-lab/SecurityEval"
+    "humanevalplus": {
+      "path": "evalplus/humanevalplus",
+      "language": "Python"
+    },
+    "eval-plus": {
+      "url": "https://github.com/evalplus/evalplus.git",
+      "tool": "gpt"
     },
     "LLMSecEval": {
-      "url": "https://github.com/tuhh-softsec/LLMSecEval"
+      "url": "https://github.com/tuhh-softsec/LLMSecEval",
+      "tool": "gpt"
     },
     "CyberSecEval": {
-      "url": "https://meta-llama.github.io/PurpleLlama/"
+      "url": "https://meta-llama.github.io/PurpleLlama/",
+      "tool": "gpt"
+    },
+    "bugs4cpp": {
+      "url": "https://github.com/Suresoft-GLaDOS/bugscpp.git",
+      "tool": "script"
+    },
+    "CREF": {
+      "url": "https://github.com/buaabarty/CREF.git"
     },
     "Code-Feedback": {
-      "path": "m-a-p/Code-Feedback"
+      "path": "m-a-p/CodeFeedback-Filtered-Instruction",
+      "language": "Multi"
     },
     "DebugBench": {
-      "path": "Rtian/DebugBench"
+      "path": "Rtian/DebugBench",
+      "language": "Multi"
     },
     "python_code_instructions": {
       "path": "iamtarun/python_code_instructions_18k_alpaca",
-      "language": "python",
+      "language": "Python",
       "features": [
         "python_code_instructions",
         "input",
@@ -127,32 +262,29 @@
         "prompt"
       ]
     },
-    "Code-Feedback-Filtered": {
-      "path": "m-a-p/CodeFeedback-Filtered-Instruction"
-    },
     "python-codes": {
-      "path": "flytech/python-codes-25k"
-    },
-    "stackoverflow-posts": {
-      "path": "mikex86/stackoverflow-posts"
+      "path": "flytech/python-codes-25k",
+      "language": "Python"
     },
     "code_instructions_alpaca": {
-      "path": "iamtarun/code_instructions_120k_alpaca"
+      "path": "iamtarun/code_instructions_120k_alpaca",
+      "language": "Multi"
+    },
+    "code_contest_processed": {
+      "path": "iamtarun/code_contest_processed",
+      "language": "Multi"
     },
     "llama-python-codes": {
-      "path": "flytech/llama-python-codes-30k"
+      "path": "flytech/llama-python-codes-30k",
+      "language": "Python"
     },
     "MMOS": {
-      "path": "cyzhh/MMOS"
+      "path": "cyzhh/MMOS",
+      "language": "Python"
     },
     "BuggedPythonLeedCode": {
-      "path": "NeuroDragon/BuggedPythonLeetCode"
-    },
-    "code-alpaca": {
-      "path": "NeuroDragon/BuggedPythonLeetCode"
-    },
-    "AIEC": {
-      "path": "AgoraX/AIEC-140K"
+      "path": "NeuroDragon/BuggedPythonLeetCode",
+      "language": "Python"
     }
   }
 }
