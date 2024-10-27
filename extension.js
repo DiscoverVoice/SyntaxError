@@ -4,7 +4,7 @@ const path = require("path");
 const fs = require("fs");
 const winston = require("winston");
 
-// 로거 설정
+
 const logger = winston.createLogger({
   level: "info",
   format: winston.format.combine(
@@ -14,14 +14,14 @@ const logger = winston.createLogger({
   transports: [
     new winston.transports.File({
       filename: path.join(__dirname, "logs", "extension.log"),
-    }), // 로그 파일 경로
+    }), 
     new winston.transports.Console(),
   ],
 });
 
 
 
-// JSON 파일 읽기 함수
+
 async function readJsonFile(filePath) {
   return new Promise((resolve, reject) => {
     if (fs.existsSync(filePath)) {
@@ -40,9 +40,9 @@ async function readJsonFile(filePath) {
   });
 }
 
-// JSON 데이터 포맷팅 출력하는 함수
+
 function prettyPrintJson(jsonData) {
-  return JSON.stringify(jsonData, null, 2); // 들여쓰기 2칸
+  return JSON.stringify(jsonData, null, 2); 
 }
 
 
@@ -63,7 +63,7 @@ function activate(context) {
           natural_language_spec: naturalLanguageSpec,
         };
 
-        // timestamp 생성
+        
         const timestamp = new Date().toISOString().replace(/T/, '_').replace(/:/g, '-').split('.')[0];
         const jsonFilePath = path.join(__dirname, "Data", "Input", `input_${timestamp}.json`);
 
@@ -73,7 +73,7 @@ function activate(context) {
 
         const pythonScriptPath = path.join(__dirname, "Code.py");
 
-        // Python 스크립트 timestamp 전달
+        
         exec(`python3 ${pythonScriptPath} ${timestamp}`, (error, stdout, stderr) => {
           if (error) {
             vscode.window.showErrorMessage(`Error: ${stderr}`);
@@ -81,7 +81,7 @@ function activate(context) {
             return;
           }
 
-          // JSON 파일 경로
+          
           const standardizedSpecFile = path.join(
             __dirname,
             "Data",
@@ -95,15 +95,15 @@ function activate(context) {
             `generated_code_${timestamp}.json`,
           );
 
-          // JSON 파일을 읽어옴
+          
           Promise.all([readJsonFile(standardizedSpecFile), readJsonFile(generatedCodeFile)]).then(([standardizedSpec, generatedCode]) => {
-            // JSON 파일 포맷팅 출력
+            
             console.log("Standardized Spec:\n" + prettyPrintJson(standardizedSpec));
             console.log("Generated Code:\n" + prettyPrintJson(generatedCode));
 
             vscode.window.showInformationMessage(`Generated Code:\n${generatedCode.generated_code}`);
 
-            // 로그에 저장
+            
             logger.info("Standardized Spec: " + standardizedSpec.standardized_spec);
             logger.info("Generated Code: " + generatedCode.generated_code);
           }).catch(err => {
@@ -120,11 +120,11 @@ function activate(context) {
 
 
 
-// 'Load Works' 명령
+
 let loadWorksCommand = vscode.commands.registerCommand("extension.LoadWorks", async () => {
   const inputFolderPath = path.join(__dirname, 'Data', 'Input');
 
-  // Input 폴더에서 파일 목록을 가져옴
+  
   const files = fs.readdirSync(inputFolderPath).filter(file => file.startsWith('input_') && file.endsWith('.json'));
 
   if (files.length === 0) {
@@ -132,7 +132,7 @@ let loadWorksCommand = vscode.commands.registerCommand("extension.LoadWorks", as
     return;
   }
 
-  // 파일 목록 QuickPick 표시
+  
   const fileOptions = files.map(file => ({
     label: file,
     description: "이전 작업"
@@ -150,10 +150,10 @@ let loadWorksCommand = vscode.commands.registerCommand("extension.LoadWorks", as
       logger.info("Selected Input: " + selectedFile.label);
       vscode.window.showInformationMessage(`선택된 작업: ${selectedFile.label}`);
       
-      // timestamp 추출
+      
       const timestamp = selectedFile.label.replace('input_', '').replace('.json', '');
 
-      // 정형 명세 및 생성된 코드 파일 경로 설정
+      
       const standardizedSpecFile = path.join(__dirname, 'Data', 'Standard_spec', `standard_spec_${timestamp}.json`);
       const generatedCodeFile = path.join(__dirname, 'Data', 'Generated', `generated_code_${timestamp}.json`);
 
@@ -218,7 +218,7 @@ let showMenuCommand = vscode.commands.registerCommand("extension.showMenu", asyn
     vscode.window.showWarningMessage("아무것도 선택하지 않았습니다.");
   }
 });
-  // QA Test 실행 함수
+  
   async function runQATest() {
     const generatedCodeFolder = path.join(__dirname, 'Data', 'Generated');
     const files = fs.readdirSync(generatedCodeFolder).filter(file => file.startsWith('generated_code_') && file.endsWith('.json'));
@@ -228,11 +228,11 @@ let showMenuCommand = vscode.commands.registerCommand("extension.showMenu", asyn
       return;
     }
 
-    // 최신 생성된 코드 파일 선택
+    
     const latestCodeFile = files[files.length - 1];
     const latestCodeFilePath = path.join(generatedCodeFolder, latestCodeFile);
 
-    // QA 모델을 호출하는 로직 구현
+    
     exec(`QA.py ${latestCodeFilePath}`, (error, stdout, stderr) => {
       if (error) {
         vscode.window.showErrorMessage(`QA Test Error: ${stderr}`);
@@ -240,13 +240,13 @@ let showMenuCommand = vscode.commands.registerCommand("extension.showMenu", asyn
         return;
       }
       
-      // QA 모델의 결과를 사용자에게 표시
+      
       vscode.window.showInformationMessage(`QA Test Results:\n${stdout}`);
       logger.info("QA Test Results: " + stdout);
     });
   }
 
-  // Fuzzing 실행 함수
+  
   async function runFuzzing() {
     const generatedCodeFolder = path.join(__dirname, 'Data', 'Generated');
     const files = fs.readdirSync(generatedCodeFolder).filter(file => file.startsWith('generated_code_') && file.endsWith('.json'));
@@ -256,11 +256,11 @@ let showMenuCommand = vscode.commands.registerCommand("extension.showMenu", asyn
       return;
     }
 
-    // 최신 생성된 코드 파일 선택
+    
     const latestCodeFile = files[files.length - 1];
     const latestCodeFilePath = path.join(generatedCodeFolder, latestCodeFile);
 
-    // Fuzzing 도구 호출 로직 구현
+    
     exec(`Fuzzer.py ${latestCodeFilePath}`, (error, stdout, stderr) => {
       if (error) {
         vscode.window.showErrorMessage(`Fuzzing Error: ${stderr}`);
@@ -268,7 +268,7 @@ let showMenuCommand = vscode.commands.registerCommand("extension.showMenu", asyn
         return;
       }
       
-      // Fuzzing 결과를 사용자에게 표시
+      
       vscode.window.showInformationMessage(`Fuzzing Results:\n${stdout}`);
       logger.info("Fuzzing Results: " + stdout);
     });
