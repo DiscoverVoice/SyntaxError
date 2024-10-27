@@ -34,13 +34,13 @@ poetry install
 poetry shell
 ```
 
-## 2.2 Install npm modules for JS/TS projects
+### 2.2 Install npm modules for JS/TS projects
 
 ```bash
 npm install
 ```
 
-## 2.3 Install afl
+### 2.3 Install afl
 
 ```bash
 git submodule update --init
@@ -48,3 +48,13 @@ cd src/utils/AFLplusplus
 make distrib
 sudo make install
 ```
+
+
+## 3. How to debug Extension prototype
+
+1. press f5
+2. crt + shift + p 
+3. Enter "Show Menu"
+4. To start new work, choose "Ask ChatGPT". Then write an explanation about your code request
+5. To load last work, choose "Load works". Then select your previous works with date and time
+6. To verify the generated codes, choose "QA Test" and "Fuzzing". This function is not completed yet
