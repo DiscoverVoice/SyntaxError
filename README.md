@@ -43,17 +43,14 @@ npm install
 ### 2.3 Install afl
 
 ```bash
-git submodule update --init
-cd src/utils/AFLplusplus
-make distrib
-sudo make install
+chmod +x ./setup.sh
+sudo ./setup.sh
 ```
-
 
 ## 3. How to debug Extension prototype
 
 1. press f5
-2. crt + shift + p 
+2. crt + shift + p
 3. Enter "Show Menu"
 4. To start new work, choose "Ask ChatGPT". Then write an explanation about your code request
 5. To load last work, choose "Load works". Then select your previous works with date and time
