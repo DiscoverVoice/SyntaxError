@@ -114,13 +114,7 @@ def generate_code(standardized_spec, feedback=None):
         "<|endoftext|><|system|>\n"
         f"{system_prompt}"
         "<|end|>"
-        Helpful tips for solving problems:
-        - Approach the solution step-by-step.
-        - Look at the big picture of the problem.
-        - If solving the whole problem is challenging, break it down into smaller parts.
-        - Consider various test cases: common scenarios, very small inputs, very large inputs, and edge cases.
-        - Review the constraints and limitations carefully.
-        - Implement C++ code.
+        "Add function prototypes to avoid complie errors.
         Specification:{standardized_spec}
         C++ Code:
         """
@@ -155,26 +149,26 @@ def generate_sub_function(code):
     return get_code(output2, "cpp")
 
 
-def generate_debug(sub_func, test_case_input, test_case_output):
-    llm = LLM("gpt-4o",
-              max_model_len=15000,
+def generate_debug(formatted_spec, sub_func, test_case_input, test_case_output, observed_output):
+    llm = LLM("./QaA",
+              max_model_len=10000,
               gpu_memory_utilization=1.0,
-              temperature=0.7,
-                top_p=0.95,
-                max_tokens=15000,
+              temperature=0.4,
+              top_p=0.90,
+              max_tokens=1500,
+              repetition_penalty=1.1
               )
     prompt = (
-        "<|endoftext|><|system|>"
+        "Formatted Spec:\n"
+        f"{formatted_spec}\n\n"
         "Provide debugging analysis for the given test case. "
-        "Focus on step-by-step evaluation, validation, and suggestions for improvement.<|end|>\n"
-        "<|user|>"
+        "Focus on step-by-step evaluation, validation, and suggestions for improvement.\n"
         "C++ Code:\n"
         f"{sub_func}\n\n"
         "Test Case:\n"
         f"  - Input:\n{test_case_input}\n"
         f"  - Expected Output:\n{test_case_output}\n"
-        "<|end|>\n"
-        "<|assistant|>\n"
+        f"  - Observed Output:\n{observed_output}\n"
         "### Step-by-Step Debugging:\n"
         "1. **Code Execution Analysis:**\n"
         "   - (Explain how the code processes the input step by step)\n"
@@ -182,24 +176,28 @@ def generate_debug(sub_func, test_case_input, test_case_output):
         "   - (Describe if the output matches the expected behavior)\n"
         "3. **Improvement Suggestions:**\n"
         "   - (Provide suggestions to improve performance, readability, or correctness)\n"
-        "<|end|>"
+        "4. **Conclusion:**\n"
+        "   - (Choosoe between Passed and Failed)\n"
+        "Answer:\n"
     )
-    
+
     output = llm.generate_text(prompt)
     return f"Debugging Analysis for Test Case:\n{output}"
 
 def generate_qa(formatted_spec, code, debug):
-    llm = LLM("gpt-4o")
+    llm = LLM("./QaA",
+              max_model_len=10000,
+              gpu_memory_utilization=1.0,
+              temperature=0.4,
+              top_p=0.95,
+              max_tokens=1500,
+              repetition_penalty=1.2
+              )
     prompt = (
-        "<|endoftext|><|system|>\n"
         "You are responsible for providing feedback on the code, specifications, and debugging results. "
-        "<|end|>\n"
-        "<|user|>\n"
         f"Formatted Specification:\n{formatted_spec}\n\n"
         f"Sub-function Code:\n{code}\n\n"
         f"Debugging Result:\n{debug}\n\n"
-        "<|end|>\n"
-        "<|assistant|>\n"
         "### Feedback:\n"
         "Q1. Summary of Implementation Errors:\n"
         "Q2. Summary of Consistency Between Specification and Code:\n"

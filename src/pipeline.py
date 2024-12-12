@@ -1,27 +1,76 @@
 from generate import generate_spec, generate_seed_generator, generate_code, generate_sub_function, generate_debug, generate_qa
 
 problem = {
-    "problem": "There are n types of coins, each with a different value. You want to make a total of k currency units using these coins in any combination. Find the number of ways to achieve this total. You can use any number of each coin.\nCoin combinations with the same composition but in a different order are considered the same.",
-    "wrong code": "#include <bits/stdc++.h>\n#include <unordered_map>\n#include <unordered_set>\n\nusing namespace std;\n\nint main() {\n  ios_base::sync_with_stdio(false);\n  cin.tie(NULL);\n  cout.tie(NULL);\n\n  // freopen(\"Input.txt\", \"r\", stdin);\n  int n, k;\n  cin >> n >> k;\n\n  vector<int> vec(n + 1);\n  for (int i = 1; i <= n; ++i)\n    cin >> vec[i];\n\n  vector<int> dp(k + 1, 0);\n  dp[0] = 1;\n\n  for (int i = 1; i <= n; ++i) {\n    for (int j = 1; j <= k; ++j) // j-value\n    {\n      int coin = vec[i];\n      if (coin <= j)\n        dp[j] = dp[j] + dp[j - coin];\n      else\n        dp[j] = dp[j - 1];\n    }\n  }\n\n  cout << dp[k];\n\n  return 0;\n}\n",
-    "input": "The first line contains two integers, n and k (1 ≤ n ≤ 100, 1 ≤ k ≤ 10,000). The following n lines each contain the value of a coin. Each coin's value is a natural number not exceeding 100,000.",
-    "output": "Output the number of ways to make k currency units. The result will be less than 2^31.",
-    "test case input 1": "3 10\n1\n2\n5",
-    "test case output 1": "10",
+    "problem": "The owner of the world-renowned Hyeongtaek Hotel, Kim Hyeongtaek, wants to increase revenue by launching a marketing campaign. A list of cities is given, along with the cost of advertising in each city and the number of hotel customers that would increase as a result. For example, \"In a certain city, spending 9 units of money on advertising brings 3 additional customers.\" The money spent in a city can only be a multiple of the given amount. For instance, spending 9 units to get 3 customers, 18 units to get 6 customers, or 27 units to get 9 customers is allowed. However, spending 3 units to get 1 customer or 12 units to get 4 customers is not allowed. Each city has an unlimited number of potential customers. Write a program to determine the minimum amount of money Hyeongtaek needs to invest to increase the number of customers by at least \(C\).",
+    "input": "The first line contains \(C\), the minimum number of customers to increase, and \(N\), the number of cities where Hyeongtaek can advertise. \(C\) is a natural number not exceeding 1,000, and \(N\) is a natural number not exceeding 20. From the second line onward, \(N\) lines provide the cost of advertising in each city and the number of customers gained from that cost. These values are natural numbers not exceeding 100.",
+    "output": "Output the answer to the problem on the first line.",
+    "test case input": "12 2\n3 5\n 1 1",
+    "test case output": "8",
 }
+observed_output = "8"
+wrong_code = """
+```cpp
+#include<iostream>
+#include<algorithm>
+#define MAX 21
+using namespace std;
+
+int n,c;
+int arr[MAX][2];
+int dp[1001];
+
+int main(){
+    cin >> c >> n;
+
+    for(int i=1;i<=1001;i++){
+        dp[i]=99999;    
+    }
+
+    int maxP=0;
+
+    for(int i=0;i<n;i++){
+        cin >> arr[i][0] >> arr[i][1];
+        dp[arr[i][1]]=arr[i][0];
+        maxP=max(maxP, arr[i][1]);
+    }
+    
+    int answer=99999;
+
+    for(int i=1;i<=c+maxP;i++){
+        for(int j=0;j<n;j++){
+
+            int cost=arr[j][0];
+            int people=arr[j][1];
+
+            if(i-people >=0){
+                dp[i]=min(dp[i], dp[i-people]+cost);
+            }
+            
+            if(i>=c){
+                answer=min(answer,dp[i]);
+            }
+        }
+    }
+
+   cout << answer << "\n";
+
+}
+```
+"""
 formatted_spec = generate_spec(problem)
 print(f"formatted spec:\n{formatted_spec}")
 
-code = generate_code(formatted_spec)
-print(f"Code:\n{code}")
+# wrong_code = generate_code(formatted_spec)
+print(f"Wrong Code:\n{wrong_code}")
 
-sub_func = generate_sub_function(code)
+sub_func = generate_sub_function(wrong_code)
 print(f"Sub func:\n{sub_func}")
 
-debug_result = generate_debug(sub_func, problem["test case input 1"], problem["test case output 1"])
+debug_result = generate_debug(formatted_spec, sub_func, problem["test case input"], problem["test case output"], observed_output)
 print(f"Debug:\n{debug_result}")
 
 qa_feedback = generate_qa(formatted_spec, sub_func, debug_result)
 print(f"QA: {qa_feedback}")
 
-code = generate_code(code, qa_feedback)
+code = generate_code(sub_func, qa_feedback)
 print(code)
