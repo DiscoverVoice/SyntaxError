@@ -1,14 +1,24 @@
 from utils.model import LLM
 from typing import Dict
 import re
+from utils.model import OpenAI, LocalLLM, LoRALLM
 
 def get_code(text, type_):
-        match = re.search(rf"```{type_}\s+(.*?)```", text, re.DOTALL)
-        return match.group(1).strip() if match else ""
+    match = re.search(rf"```{type_}\s+(.*?)```", text, re.DOTALL)
+    return match.group(1).strip() if match else ""
+
+def make_code(text, type_):
+    return f"```{type_}\n{text}\n```"
 
 def generate_spec(problem: Dict):
-    llm = LLM("microsoft/Phi-3-small-8k-instruct")
-
+    llm = LocalLLM(
+        name="microsoft/Phi-3-small-8k-instruct",
+        temperature=0.6,
+        top_p=0.95,
+        repetition_penalty=1.2,
+        gpu_memory_utilization=0.9
+    )
+    
     test_cases = []
     for key, value in problem.items():
         if key.startswith("test case"):
@@ -89,24 +99,12 @@ def generate_spec(problem: Dict):
         "<|assistant|>\n"
     )
     output = llm.generate_text(prompt)
+    del llm
     return output
 
 
-def generate_seed_generator(formatted_spec):
-    llm = LLM("Qwen/Qwen2.5-Coder-7B-Instruct")
-
-    prompt = f"""
-    You are a code assistant specializing in making input generetor. Please create a Python code that generates random input examples based on specified variables and constraints.
-    Function Requirements:
-    {formatted_spec}
-    """
-    output = llm.generate_text(prompt)
-
-    return get_code(output, "python")
-
-
 def generate_code(standardized_spec, feedback=None):
-    llm = LLM("gpt-4o")
+    llm = OpenAI(name="gpt-4o")
     if feedback is None:
         system_prompt = """When prompting for user input, do not display any text. Simply wait for the input without showing any message, such as "Enter your age" or similar prompts."""
 
@@ -123,14 +121,21 @@ def generate_code(standardized_spec, feedback=None):
         {feedback}
         C++ Code:
         {standardized_spec}
+        Please give me revised code.
+        C++ Code:
         """
 
     output = llm.generate_text(prompt)
-    return get_code(output, "cpp")
+    code = get_code(output, "cpp")
+    code = make_code(code, "cpp")
+    return code
+
 
 def generate_sub_function(code):
-    llm = LLM("Qwen/Qwen2.5-7B-Instruct", temperature=0.7, top_p=0.95, max_tokens=2048)
-    
+    llm1 = LocalLLM(
+        name="Qwen/Qwen2.5-7B-Instruct", temperature=0.7, top_p=0.95, max_tokens=2048
+    )
+
     prompt1 = (
         f"Code: {code}\n"
         "Convert the given C++ code into a hierarchical tree-style structure:\n"
@@ -139,25 +144,38 @@ def generate_sub_function(code):
         "  - Provide the updated code in C++ format, with each function defined separately in a clear and flattened structure, using the ```cpp``` block.\n\n"
         "Hierarchical C++ Code:\n"
     )
-    output1 = llm.generate_text(prompt1)
+    output1 = llm1.generate_text(prompt1)
     output1 = get_code(output1, "cpp")
-    prompt2 = (
-        f"Code: {output1}\n"
-        "Function prototype must be declared to avoid comple error."
+    code = make_code(output1, "cpp")
+    del llm1
+    llm2 = LocalLLM(
+        name="Qwen/Qwen2.5-7B-Instruct", temperature=0.4, top_p=0.95, max_tokens=2048
     )
-    output2 = llm.generate_text(prompt2)
-    return get_code(output2, "cpp")
+    prompt2 = (
+       f"Code: {code}\n"
+        "Please analyze the code provided and generate all necessary function prototypes to ensure the code compiles correctly. "
+        "Each prototype should include the return type, function name, and parameter types with meaningful names, following C/C++ conventions. "
+        "If the function is already defined in the code, ensure its prototype matches the definition."
+    )
+    output2 = llm2.generate_text(prompt2)
+    output2 = get_code(output2, "cpp")
+    code = make_code(output2, "cpp")
+    del llm2
+    return code
 
 
-def generate_debug(formatted_spec, sub_func, test_case_input, test_case_output, observed_output):
-    llm = LLM("./QaA",
-              max_model_len=10000,
-              gpu_memory_utilization=1.0,
-              temperature=0.4,
-              top_p=0.90,
-              max_tokens=1500,
-              repetition_penalty=1.1
-              )
+def generate_debug(
+    formatted_spec, sub_func, test_case_input, test_case_output, observed_output
+):
+    llm = LoRALLM(
+        name="./QaA",
+        max_model_len=10000,
+        gpu_memory_utilization=0.9,
+        temperature=0.4,
+        top_p=0.90,
+        max_tokens=1500,
+        repetition_penalty=1.1,
+    )
     prompt = (
         "Formatted Spec:\n"
         f"{formatted_spec}\n\n"
@@ -170,40 +188,61 @@ def generate_debug(formatted_spec, sub_func, test_case_input, test_case_output, 
         f"  - Expected Output:\n{test_case_output}\n"
         f"  - Observed Output:\n{observed_output}\n"
         "### Step-by-Step Debugging:\n"
-        "1. **Code Execution Analysis:**\n"
+        "1. **Output Matching:**\n"
+        "   - Compare the observed output with the expected output. If they match, indicate 'Match: True'; otherwise, indicate 'Match: False.'\n"
+        "2. **Code Execution Analysis:**\n"
         "   - (Explain how the code processes the input step by step)\n"
-        "2. **Validation:**\n"
+        "3. **Validation:**\n"
         "   - (Describe if the output matches the expected behavior)\n"
-        "3. **Improvement Suggestions:**\n"
+        "4. **Improvement Suggestions:**\n"
         "   - (Provide suggestions to improve performance, readability, or correctness)\n"
-        "4. **Conclusion:**\n"
-        "   - (Choosoe between Passed and Failed)\n"
         "Answer:\n"
     )
 
     output = llm.generate_text(prompt)
-    return f"Debugging Analysis for Test Case:\n{output}"
+    del llm
+    return output
+
 
 def generate_qa(formatted_spec, code, debug):
-    llm = LLM("./QaA",
-              max_model_len=10000,
-              gpu_memory_utilization=1.0,
-              temperature=0.4,
-              top_p=0.95,
-              max_tokens=1500,
-              repetition_penalty=1.2
-              )
+    llm = LoRALLM(
+        name="./qa",
+        max_model_len=10000,
+        gpu_memory_utilization=0.9,
+        temperature=0.6,
+        top_p=0.95,
+        max_tokens=1500,
+        repetition_penalty=1.1,
+    )
     prompt = (
         "You are responsible for providing feedback on the code, specifications, and debugging results. "
         f"Formatted Specification:\n{formatted_spec}\n\n"
         f"Sub-function Code:\n{code}\n\n"
         f"Debugging Result:\n{debug}\n\n"
         "### Feedback:\n"
-        "Q1. Summary of Implementation Errors:\n"
-        "Q2. Summary of Consistency Between Specification and Code:\n"
-        "Q3. Suggestions for Improvements or Alternative Implementations:\n"
-        "Q4. Summary of Debugging Results:\n"
-        "<|end|>"
+        "1. **Summary of Implementation Errors:**\n"
+        "2. **Summary of Consistency Between Specification and Code:**\n"
+        "3. **Suggestions for Improvements or Alternative Implementations:**\n"
+        "4. **Summary of Debugging Results:**\n\n"
+        "Answer:\n"
     )
     output = llm.generate_text(prompt)
+    del llm
     return output
+
+
+def parse_pass_value(debug_result):
+    """
+    Extracts the 'pass' value (true or false) from the debugging output.
+
+    Args:
+        debug_output (str): Output string generated by the LLM.
+
+    Returns:
+        str: The value of 'pass' (true or false), or None if not found.
+    """
+    match = re.search(r"Answer:\s*(True|False)", debug_result)
+    if match:
+        return match.group(1)
+    else:
+        return "Unknown"

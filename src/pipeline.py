@@ -1,4 +1,5 @@
-from generate import generate_spec, generate_seed_generator, generate_code, generate_sub_function, generate_debug, generate_qa
+from generate import generate_spec, generate_code, generate_sub_function, generate_debug, generate_qa
+from sanitizer import sanitize
 
 problem = {
     "problem": "The owner of the world-renowned Hyeongtaek Hotel, Kim Hyeongtaek, wants to increase revenue by launching a marketing campaign. A list of cities is given, along with the cost of advertising in each city and the number of hotel customers that would increase as a result. For example, \"In a certain city, spending 9 units of money on advertising brings 3 additional customers.\" The money spent in a city can only be a multiple of the given amount. For instance, spending 9 units to get 3 customers, 18 units to get 6 customers, or 27 units to get 9 customers is allowed. However, spending 3 units to get 1 customer or 12 units to get 4 customers is not allowed. Each city has an unlimited number of potential customers. Write a program to determine the minimum amount of money Hyeongtaek needs to invest to increase the number of customers by at least \(C\).",
@@ -7,7 +8,6 @@ problem = {
     "test case input": "12 2\n3 5\n 1 1",
     "test case output": "8",
 }
-observed_output = "8"
 wrong_code = """
 ```cpp
 #include<iostream>
@@ -57,14 +57,18 @@ int main(){
 }
 ```
 """
+
+
 formatted_spec = generate_spec(problem)
 print(f"formatted spec:\n{formatted_spec}")
 
-# wrong_code = generate_code(formatted_spec)
+wrong_code = generate_code(formatted_spec)
 print(f"Wrong Code:\n{wrong_code}")
 
 sub_func = generate_sub_function(wrong_code)
 print(f"Sub func:\n{sub_func}")
+
+observed_output = sanitize(sub_func, "./program.cpp", "./program", problem["test case input"],)
 
 debug_result = generate_debug(formatted_spec, sub_func, problem["test case input"], problem["test case output"], observed_output)
 print(f"Debug:\n{debug_result}")
